@@ -13,45 +13,45 @@ var db = require("../models");
 // =============================================================
 module.exports = function(app) {
 
-  // GET route for getting all of the todos
-  app.get("/api/todos", function(req, res) {
-
-    db.Todo.findAll({}).then(function(dbTodo) {
-      res.json(dbTodo);
+  // GET route for getting all of the burgers
+  app.get("/api/burgers", function(req, res) {
+      console.log("**********routes/api-routes");
+    db.Burgers.findAll({}).then(function(dbBurgers) {
+      res.json(dbBurgers);
     })
 
   });
 
   // POST route for saving a new todo. We can create a todo using the data on req.body
-  app.post("/api/todos", function(req, res) {
-    console.log(req.body.text);
+  app.post("/api/burgers", function(req, res) {
+    console.log(req.body.burger_name);
 
-    db.Todo.create({
-      text: req.body.text,
-      complete: req.body.complete
-    }).then(function(dbTodo){
-      res.json(dbTodo);
+    db.Burgers.create({
+      burger_name: req.body.burger_name,
+      devoured: req.body.devoured
+    }).then(function(dbBurgers){
+      res.json(dbBurgers);
     })
 
   });
 
-  // DELETE route for deleting todos. We can access the ID of the todo to delete in
+  // DELETE route for deleting burgers. We can access the ID of the todo to delete in
   // req.params.id
-  app.delete("/api/todos/:id", function(req, res) {
+  app.delete("/api/burgers/:id", function(req, res) {
 
-    db.Todo.destroy({where:{
+    db.Burgers.destroy({where:{
       id: req.params.id
-    }}).then(function(dbTodo){
-      res.json(dbTodo);
+    }}).then(function(dbBurgers){
+      res.json(dbBurgers);
     })
 
   });
 
-  // PUT route for updating todos. We can access the updated todo in req.body
-  // app.update("/api/todos", function(req, res) {
-  app.put("/api/todos", function(req, res) {
-    db.Todo.update({ complete: req.body.complete, text: req.body.text}, {where: {id: req.body.id}}).then(function(dbTodo){
-      res.json(dbTodo);
+  // PUT route for updating burgers. We can access the updated todo in req.body
+  // app.update("/api/burgers", function(req, res) {
+  app.put("/api/burgers/:id", function(req, res) {
+    db.Burgers.update({ devoured: req.body.devoured}, {where: {id: req.params.id}}).then(function(dbBurgers){
+      res.json(dbBurgers);
     });
   });
 
